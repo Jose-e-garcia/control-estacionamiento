@@ -30,6 +30,21 @@ public class TicketController {
         return ticketService.buscarPorId(id);
     }
 
+    @GetMapping("/estado/{estado}")
+    public List<Ticket> listarPorEstado(@PathVariable String estado) {
+        return ticketService.listarPorEstado(estado);
+    }
+
+    @GetMapping("/estado/{estado}/total")
+    public long contarTicketsPorEstado(@PathVariable String estado) {
+        return ticketService.contarTicketsPorEstado(estado);
+    }
+
+    @GetMapping("/recaudacion/hoy")
+    public Double calcularTotalRecaudadoHoy() {
+        return ticketService.calcularTotalRecaudadoHoy();
+    }
+
     @PostMapping
     public ResponseEntity<Ticket> registrar(@Valid @RequestBody TicketRequestDTO datos) {
         Ticket ticket = ticketService.registrar(datos);
@@ -41,6 +56,11 @@ public class TicketController {
             @PathVariable Long id,
             @Valid @RequestBody TicketRequestDTO datos) {
         return ticketService.actualizar(id, datos);
+    }
+
+    @PutMapping("/{id}/finalizar")
+    public Ticket finalizar(@PathVariable Long id) {
+        return ticketService.finalizar(id);
     }
 
     @DeleteMapping("/{id}")

@@ -17,6 +17,11 @@ public class TicketRequestDTO {
     @Positive(message = "El ID del espacio debe ser mayor que cero")
     private Long espacioId;
 
+    @NotBlank(message = "El tipo de vehículo es obligatorio")
+    @Pattern(regexp = "MOTOCICLETA|AUTO|PICKUP",
+            message = "El tipo debe ser MOTOCICLETA, AUTO o PICKUP")
+    private String tipoVehiculo;
+
     public TicketRequestDTO() {
     }
 
@@ -34,5 +39,13 @@ public class TicketRequestDTO {
 
     public void setEspacioId(Long espacioId) {
         this.espacioId = espacioId;
+    }
+
+    public String getTipoVehiculo() {
+        return tipoVehiculo;
+    }
+
+    public void setTipoVehiculo(String tipoVehiculo) {
+        this.tipoVehiculo = tipoVehiculo;
     }
 }

@@ -17,10 +17,15 @@ public class Ticket {
     private Long id;
 
     private String placa;
+
+    private String tipoVehiculo;
+
     private LocalDateTime horaEntrada;
     private LocalDateTime horaSalida;
     private String estado;
     private Double total;
+
+    private boolean eliminado = false;
 
 
     @ManyToOne
@@ -42,6 +47,14 @@ public class Ticket {
 
     public void setPlaca(String placa) {
         this.placa = placa;
+    }
+
+    public String getTipoVehiculo() {
+        return tipoVehiculo;
+    }
+
+    public void setTipoVehiculo(String tipoVehiculo) {
+        this.tipoVehiculo = tipoVehiculo;
     }
 
     public LocalDateTime getHoraEntrada() {
@@ -83,4 +96,13 @@ public class Ticket {
     public void setEspacio(Espacio espacio) {
         this.espacio = espacio;
     }
+
+    public boolean isEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(boolean eliminado) {
+        this.eliminado = eliminado;
+    }
+
 }

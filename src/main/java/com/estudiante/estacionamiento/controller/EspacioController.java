@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.estudiante.estacionamiento.dto.EspacioRequestDTO;
+
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 @RestController
@@ -26,8 +30,18 @@ public class EspacioController {
         return espacioService.listarEspacios();
     }
 
+    @GetMapping("/disponibles")
+    public List<Espacio> listarEspaciosDisponibles() {
+        return espacioService.listarEspaciosDisponibles();
+    }
+
+    @GetMapping("/disponibles/total")
+    public long contarEspaciosDisponibles() {
+        return espacioService.contarEspaciosDisponibles();
+    }
+
     @PostMapping
-    public Espacio guardarEspacio(@RequestBody Espacio espacio) {
-        return espacioService.guardarEspacio(espacio);
+    public Espacio guardarEspacio(@Valid @RequestBody EspacioRequestDTO datos) {
+        return espacioService.guardarEspacio(datos);
     }
 }
