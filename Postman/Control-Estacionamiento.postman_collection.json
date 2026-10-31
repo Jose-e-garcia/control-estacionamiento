@@ -1,0 +1,654 @@
+{
+  "info": {
+    "_postman_id": "11c91361-dbb3-4dd1-aa71-007a5507b4a1",
+    "name": "Control-Estacionamiento",
+    "description": "Colección de pruebas de la API REST del Sistema de Control de Estacionamiento.\n\nIncluye solicitudes para administrar espacios y tickets, consultar indicadores, registrar entradas y salidas, validar datos y comprobar las reglas de negocio.\n\nTecnología: Spring Boot y PostgreSQL.  \nURL base: [http://localhost:8080](http://localhost:8080)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59339701"
+  },
+  "item": [
+    {
+      "name": "Consultar espacios disponibles",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/espacios/disponibles",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "espacios",
+            "disponibles"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Contar espacios disponibles",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/espacios/disponibles/total",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "espacios",
+            "disponibles",
+            "total"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Consultar todos los espacios",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/espacios",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "espacios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Registrar espacio",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"codigo\": \"C-06\",\r\n  \"tipo\": \"AUTO\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/espacios",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "espacios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Validar tipo de espacio",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"codigo\": \"C-02\",\r\n  \"tipo\": \"CAMION\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/espacios",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "espacios"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Validar tipo de espacio",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/espacios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "espacios"
+              ]
+            }
+          },
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 30 Oct 2026 12:24:54 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"timestamp\": \"2026-10-30T12:24:54.188Z\",\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"path\": \"/api/espacios\"\n}"
+        },
+        {
+          "name": "Validar tipo de espacio",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/espacios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "espacios"
+              ]
+            }
+          },
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 30 Oct 2026 12:26:15 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"timestamp\": \"2026-10-30T12:26:15.935Z\",\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"path\": \"/api/espacios\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Consultar todos los tickets",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/tickets",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tickets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Consultar tickets activos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/tickets/estado/ACTIVO",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tickets",
+            "estado",
+            "ACTIVO"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Contar tickets activos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/tickets/estado/ACTIVO/total",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tickets",
+            "estado",
+            "ACTIVO",
+            "total"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Consultar tickets finalizados",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/tickets/estado/FINALIZADO",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tickets",
+            "estado",
+            "FINALIZADO"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Contar tickets finalizados",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/tickets/estado/FINALIZADO/total",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tickets",
+            "estado",
+            "FINALIZADO",
+            "total"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Consultar recaudación del día",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/tickets/recaudacion/hoy",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tickets",
+            "recaudacion",
+            "hoy"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Registrar ticket",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"placa\": \"P456JKL\",\r\n  \"espacioId\": 3,\r\n  \"tipoVehiculo\": \"AUTO\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/tickets",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tickets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Validar espacio ocupado",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"placa\": \"P999XYZ\",\r\n  \"espacioId\": 3,\r\n  \"tipoVehiculo\": \"AUTO\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/tickets",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tickets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Finalizar ticket",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/tickets/5/finalizar",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tickets",
+            "5",
+            "finalizar"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verificar espacio liberado",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/espacios/disponibles",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "espacios",
+            "disponibles"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Consultar ticket finalizado",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/tickets/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tickets",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Validar modificación de ticket finalizado",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"placa\": \"P999XYZ\",\r\n  \"espacioId\": 3,\r\n  \"tipoVehiculo\": \"AUTO\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/tickets/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tickets",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Eliminar ticket finalizado",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/tickets/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tickets",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verificar ticket eliminado",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/tickets/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tickets",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Validar código de espacio duplicado",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"codigo\": \"C-01\",\r\n  \"tipo\": \"AUTO\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/espacios",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "espacios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Validar compatibilidad de tipo de vehículo y espacio",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"placa\": \"P888XYZ\",\r\n    \"espacioId\": 2,\r\n    \"tipoVehiculo\": \"MOTOCICLETA\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/tickets",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tickets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Validar compatibilidad al actualizar ticket",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"placa\": \"P123ABC\",\r\n    \"espacioId\": 1,\r\n    \"tipoVehiculo\": \"MOTOCICLETA\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/tickets/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "tickets",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
