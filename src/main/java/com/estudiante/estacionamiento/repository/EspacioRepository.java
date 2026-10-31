@@ -13,4 +13,6 @@ public interface EspacioRepository extends JpaRepository<Espacio, Long> {
 
     long countByOcupadoFalse();
 
+    boolean existsByCodigo(String codigo);
+
 }

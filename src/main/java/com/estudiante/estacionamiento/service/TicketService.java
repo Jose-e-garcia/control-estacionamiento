@@ -67,6 +67,10 @@ public class TicketService {
             throw new IllegalStateException("El espacio ya está ocupado");
         }
 
+        if (!espacio.getTipo().equals(datos.getTipoVehiculo())) {
+            throw new IllegalStateException("El tipo de vehículo no coincide con el tipo de espacio");
+        }
+
         Ticket ticket = new Ticket();
         ticket.setPlaca(datos.getPlaca());
 
@@ -98,6 +102,12 @@ public class TicketService {
                 .orElseThrow(() -> new RecursoNoEncontradoException(
                         "No existe un espacio con el ID " + datos.getEspacioId()));
 
+
+        if (!nuevoEspacio.getTipo().equals(datos.getTipoVehiculo())) {
+            throw new IllegalStateException("El tipo de vehículo no coincide con el tipo de espacio");
+        }
+
+
         Espacio espacioAnterior = ticket.getEspacio();
 
         if (!espacioAnterior.getId().equals(nuevoEspacio.getId())) {
@@ -115,6 +125,8 @@ public class TicketService {
         }
 
         ticket.setPlaca(datos.getPlaca());
+
+        ticket.setTipoVehiculo(datos.getTipoVehiculo());
 
         return ticketRepository.save(ticket);
     }

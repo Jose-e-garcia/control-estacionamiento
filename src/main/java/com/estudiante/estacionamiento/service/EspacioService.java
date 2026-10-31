@@ -30,6 +30,11 @@ public class EspacioService {
     }
 
     public Espacio guardarEspacio(EspacioRequestDTO datos) {
+
+        if (espacioRepository.existsByCodigo(datos.getCodigo())) {
+            throw new IllegalStateException("Ya existe un espacio con ese código");
+        }
+
         Espacio espacio = new Espacio();
         espacio.setCodigo(datos.getCodigo());
         espacio.setTipo(datos.getTipo());
