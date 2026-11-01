@@ -143,6 +143,8 @@ La dirección base es:
 | **GET** | `/api/espacios/disponibles` | Consultar espacios disponibles. |
 | **GET** | `/api/espacios/disponibles/total` | Contar espacios disponibles. |
 | **POST** | `/api/espacios` | Registrar un espacio. |
+| **PUT** | `/api/espacios/{id}` | Modificar un espacio. |
+| **DELETE** | `/api/espacios/{id}` | Eliminar un espacio. |
 
 ### Endpoints de tickets
 
