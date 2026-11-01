@@ -10,6 +10,8 @@ import com.estudiante.estacionamiento.exception.RecursoNoEncontradoException;
 
 import com.estudiante.estacionamiento.repository.TicketRepository;
 
+import com.estudiante.estacionamiento.dto.EspacioResponseDTO;
+
 import java.util.List;
 
 @Service
@@ -23,8 +25,11 @@ public class EspacioService {
         this.ticketRepository = ticketRepository;
     }
 
-    public List<Espacio> listarEspacios() {
-        return espacioRepository.findAll();
+    public List<EspacioResponseDTO> listarEspacios() {
+        return espacioRepository.findAll()
+                .stream()
+                .map(EspacioResponseDTO::desdeEntidad)
+                .toList();
     }
 
     public Espacio buscarEspacioPorId(Long id) {
@@ -33,15 +38,24 @@ public class EspacioService {
                         "No existe un espacio con el ID " + id));
     }
 
-    public List<Espacio> listarEspaciosDisponibles() {
-        return espacioRepository.findByOcupadoFalse();
+    public EspacioResponseDTO buscarEspacioPorIdRespuesta(Long id) {
+        Espacio espacio = buscarEspacioPorId(id);
+        return EspacioResponseDTO.desdeEntidad(espacio);
+    }
+
+
+    public List<EspacioResponseDTO> listarEspaciosDisponibles() {
+        return espacioRepository.findByOcupadoFalse()
+                .stream()
+                .map(EspacioResponseDTO::desdeEntidad)
+                .toList();
     }
 
     public long contarEspaciosDisponibles() {
         return espacioRepository.countByOcupadoFalse();
     }
 
-    public Espacio guardarEspacio(EspacioRequestDTO datos) {
+    public EspacioResponseDTO guardarEspacio(EspacioRequestDTO datos) {
 
         if (espacioRepository.existsByCodigo(datos.getCodigo())) {
             throw new IllegalStateException("Ya existe un espacio con ese código");
@@ -52,10 +66,10 @@ public class EspacioService {
         espacio.setTipo(datos.getTipo());
         espacio.setOcupado(false);
 
-        return espacioRepository.save(espacio);
+        return EspacioResponseDTO.desdeEntidad(espacioRepository.save(espacio));
     }
 
-    public Espacio actualizarEspacio(Long id, EspacioRequestDTO datos) {
+    public EspacioResponseDTO actualizarEspacio(Long id, EspacioRequestDTO datos) {
 
         Espacio espacio = buscarEspacioPorId(id);
 
@@ -70,7 +84,7 @@ public class EspacioService {
         espacio.setCodigo(datos.getCodigo());
         espacio.setTipo(datos.getTipo());
 
-        return espacioRepository.save(espacio);
+        return EspacioResponseDTO.desdeEntidad(espacioRepository.save(espacio));
     }
 
 

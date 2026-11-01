@@ -43,4 +43,15 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, String>> manejarErrorGeneral(
+            Exception excepcion) {
+
+        Map<String, String> error = new LinkedHashMap<>();
+        error.put("mensaje", "Ocurrió un error interno en el servidor");
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+
 }

@@ -9,6 +9,8 @@ import com.estudiante.estacionamiento.repository.TicketRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.estudiante.estacionamiento.dto.TicketResponseDTO;
+
 import java.time.LocalDate;
 
 import java.time.LocalDateTime;
@@ -25,12 +27,18 @@ public class TicketService {
         this.espacioRepository = espacioRepository;
     }
 
-    public List<Ticket> listar() {
-        return ticketRepository.findByEliminadoFalse();
+    public List<TicketResponseDTO> listar() {
+        return ticketRepository.findByEliminadoFalse()
+                .stream()
+                .map(TicketResponseDTO::desdeEntidad)
+                .toList();
     }
 
-    public List<Ticket> listarPorEstado(String estado) {
-        return ticketRepository.findByEstadoAndEliminadoFalse(estado);
+    public List<TicketResponseDTO> listarPorEstado(String estado) {
+        return ticketRepository.findByEstadoAndEliminadoFalse(estado)
+                .stream()
+                .map(TicketResponseDTO::desdeEntidad)
+                .toList();
     }
 
     public long contarTicketsPorEstado(String estado) {
@@ -57,8 +65,14 @@ public class TicketService {
         return ticket;
     }
 
+    public TicketResponseDTO buscarPorIdRespuesta(Long id) {
+        Ticket ticket = buscarPorId(id);
+        return TicketResponseDTO.desdeEntidad(ticket);
+    }
+
+
     @Transactional
-    public Ticket registrar(TicketRequestDTO datos) {
+    public TicketResponseDTO registrar(TicketRequestDTO datos) {
         Espacio espacio = espacioRepository.findById(datos.getEspacioId())
                 .orElseThrow(() -> new RecursoNoEncontradoException(
                         "No existe un espacio con el ID " + datos.getEspacioId()));
@@ -83,11 +97,11 @@ public class TicketService {
         espacio.setOcupado(true);
         espacioRepository.save(espacio);
 
-        return ticketRepository.save(ticket);
+        return TicketResponseDTO.desdeEntidad(ticketRepository.save(ticket));
     }
 
     @Transactional
-    public Ticket actualizar(Long id, TicketRequestDTO datos) {
+    public TicketResponseDTO actualizar(Long id, TicketRequestDTO datos) {
         Ticket ticket = buscarPorId(id);
 
         if (ticket.isEliminado()) {
@@ -128,11 +142,11 @@ public class TicketService {
 
         ticket.setTipoVehiculo(datos.getTipoVehiculo());
 
-        return ticketRepository.save(ticket);
+        return TicketResponseDTO.desdeEntidad(ticketRepository.save(ticket));
     }
 
     @Transactional
-    public Ticket finalizar(Long id) {
+    public TicketResponseDTO finalizar(Long id) {
         Ticket ticket = buscarPorId(id);
 
         if (!"ACTIVO".equals(ticket.getEstado())) {
@@ -182,7 +196,7 @@ public class TicketService {
         espacio.setOcupado(false);
         espacioRepository.save(espacio);
 
-        return ticketRepository.save(ticket);
+        return TicketResponseDTO.desdeEntidad(ticketRepository.save(ticket));
     }
 
     @Transactional

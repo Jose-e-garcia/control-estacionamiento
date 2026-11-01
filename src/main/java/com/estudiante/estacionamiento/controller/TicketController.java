@@ -1,12 +1,13 @@
 package com.estudiante.estacionamiento.controller;
 
 import com.estudiante.estacionamiento.dto.TicketRequestDTO;
-import com.estudiante.estacionamiento.entity.Ticket;
 import com.estudiante.estacionamiento.service.TicketService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.estudiante.estacionamiento.dto.TicketResponseDTO;
+
 
 import java.util.List;
 
@@ -21,17 +22,17 @@ public class TicketController {
     }
 
     @GetMapping
-    public List<Ticket> listar() {
+    public List<TicketResponseDTO> listar() {
         return ticketService.listar();
     }
 
     @GetMapping("/{id}")
-    public Ticket buscarPorId(@PathVariable Long id) {
-        return ticketService.buscarPorId(id);
+    public TicketResponseDTO buscarPorId(@PathVariable Long id) {
+        return ticketService.buscarPorIdRespuesta(id);
     }
 
     @GetMapping("/estado/{estado}")
-    public List<Ticket> listarPorEstado(@PathVariable String estado) {
+    public List<TicketResponseDTO> listarPorEstado(@PathVariable String estado) {
         return ticketService.listarPorEstado(estado);
     }
 
@@ -46,20 +47,20 @@ public class TicketController {
     }
 
     @PostMapping
-    public ResponseEntity<Ticket> registrar(@Valid @RequestBody TicketRequestDTO datos) {
-        Ticket ticket = ticketService.registrar(datos);
+    public ResponseEntity<TicketResponseDTO> registrar(@Valid @RequestBody TicketRequestDTO datos) {
+        TicketResponseDTO ticket = ticketService.registrar(datos);
         return ResponseEntity.status(HttpStatus.CREATED).body(ticket);
     }
 
     @PutMapping("/{id}")
-    public Ticket actualizar(
+    public TicketResponseDTO actualizar(
             @PathVariable Long id,
             @Valid @RequestBody TicketRequestDTO datos) {
         return ticketService.actualizar(id, datos);
     }
 
     @PutMapping("/{id}/finalizar")
-    public Ticket finalizar(@PathVariable Long id) {
+    public TicketResponseDTO finalizar(@PathVariable Long id) {
         return ticketService.finalizar(id);
     }
 
