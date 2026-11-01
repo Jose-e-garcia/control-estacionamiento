@@ -151,9 +151,17 @@ public class TicketService {
             horas = 1;
         }
 
+        String tipoVehiculo = ticket.getTipoVehiculo();
+
+        if (tipoVehiculo == null || tipoVehiculo.isBlank()) {
+            tipoVehiculo = ticket.getEspacio().getTipo();
+        }
+
+        ticket.setTipoVehiculo(tipoVehiculo);
+
         double tarifa;
 
-        switch (ticket.getTipoVehiculo()) {
+        switch (tipoVehiculo) {
             case "MOTOCICLETA":
                 tarifa = 5.0;
                 break;

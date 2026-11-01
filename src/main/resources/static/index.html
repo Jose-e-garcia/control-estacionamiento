@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Estacionamiento</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-principal: #176b87;
+            --color-secundario: #64ccc5;
+            --color-fondo: #f4f8fa;
+            --color-texto: #24343b;
+        }
+
+        body {
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+        }
+
+        .encabezado {
+            background: linear-gradient(120deg, #0d4c67, #176b87, #64ccc5);
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        .tarjeta {
+            background: white;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            height: 100%;
+        }
+
+        .indicador {
+            border-left: 5px solid var(--color-secundario);
+        }
+
+        .valor-indicador {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--color-principal);
+        }
+
+        .btn-principal {
+            background-color: var(--color-principal);
+            color: white;
+        }
+
+        .btn-principal:hover {
+            background-color: #0d4c67;
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #68777d;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>🚗 Control de Estacionamiento</h1>
+    <p class="mb-0">Sistema de administración de espacios y tickets</p>
+</header>
+
+<main class="container my-4">
+
+    <div id="mensaje"></div>
+
+    <section class="row g-3 mb-4">
+
+        <div class="col-md-6 col-lg-3">
+            <div class="tarjeta indicador">
+                <h6>Espacios disponibles</h6>
+                <div class="valor-indicador" id="totalDisponibles">0</div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="tarjeta indicador">
+                <h6>Tickets activos</h6>
+                <div class="valor-indicador" id="totalActivos">0</div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="tarjeta indicador">
+                <h6>Tickets finalizados</h6>
+                <div class="valor-indicador" id="totalFinalizados">0</div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="tarjeta indicador">
+                <h6>Recaudación del día</h6>
+                <div class="valor-indicador" id="recaudacionHoy">Q 0.00</div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="tarjeta mb-4">
+        <h4>Administración de espacios</h4>
+        <p>Registro y consulta de los espacios del estacionamiento.</p>
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <form id="formularioEspacio">
+                    <div class="mb-3">
+                        <label for="codigoEspacio" class="form-label">Código del espacio</label>
+                        <input type="text" class="form-control" id="codigoEspacio" placeholder="Ej. C-06" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tipoEspacio" class="form-label">Tipo de espacio</label>
+                        <select class="form-select" id="tipoEspacio" required>
+                            <option value="">Seleccione un tipo</option>
+                            <option value="MOTOCICLETA">Motocicleta</option>
+                            <option value="AUTO">Automóvil</option>
+                            <option value="PICKUP">Pickup</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-principal w-100">Registrar espacio</button>
+                </form>
+            </div>
+
+            <div class="col-md-8">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Código</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tablaEspacios"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tarjeta mb-4">
+        <h4>Administración de tickets</h4>
+        <p>Registro de vehículos y control de entradas y salidas.</p>
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <form id="formularioTicket">
+
+                    <div class="mb-3">
+                        <label for="placaVehiculo" class="form-label">Placa del vehículo</label>
+                        <input type="text" class="form-control" id="placaVehiculo"
+                               placeholder="Ej. P123ABC" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tipoVehiculo" class="form-label">Tipo de vehículo</label>
+                        <select class="form-select" id="tipoVehiculo" required>
+                            <option value="">Seleccione un tipo</option>
+                            <option value="MOTOCICLETA">Motocicleta</option>
+                            <option value="AUTO">Automóvil</option>
+                            <option value="PICKUP">Pickup</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="espacioSeleccionado" class="form-label">Espacio disponible</label>
+                        <select class="form-select" id="espacioSeleccionado" required>
+                            <option value="">Seleccione un espacio</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-principal w-100">
+                        Registrar entrada
+                    </button>
+
+                </form>
+            </div>
+
+            <div class="col-md-8">
+                <h5>Tickets activos</h5>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                        <tr>
+                            <th>Placa</th>
+                            <th>Tipo</th>
+                            <th>Espacio</th>
+                            <th>Hora de entrada</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tablaTickets"></tbody>
+                    </table>
+
+                    <h5 class="mt-4">Tickets finalizados</h5>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                            <tr>
+                                <th>Placa</th>
+                                <th>Tipo</th>
+                                <th>Espacio</th>
+                                <th>Hora de entrada</th>
+                                <th>Hora de salida</th>
+                                <th>Total pagado</th>
+                                <th>Estado</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tablaTicketsFinalizados"></tbody>
+                        </table>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>Control de Estacionamiento | Proyecto PF-07</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    const API_ESPACIOS = "/api/espacios";
+    const API_TICKETS = "/api/tickets";
+
+    async function cargarEspaciosDisponibles() {
+        try {
+            const respuesta = await fetch(`${API_ESPACIOS}/disponibles/total`);
+
+            if (!respuesta.ok) {
+                throw new Error("No se pudieron consultar los espacios disponibles");
+            }
+
+            const total = await respuesta.json();
+
+            document.getElementById("totalDisponibles").textContent = total;
+
+        } catch (error) {
+            mostrarMensaje(error.message, "danger");
+        }
+    }
+
+    async function cargarTicketsActivos() {
+        try {
+            const respuesta = await fetch(`${API_TICKETS}/estado/ACTIVO/total`);
+
+            if (!respuesta.ok) {
+                throw new Error("No se pudieron consultar los tickets activos");
+            }
+
+            const total = await respuesta.json();
+
+            document.getElementById("totalActivos").textContent = total;
+
+        } catch (error) {
+            mostrarMensaje(error.message, "danger");
+        }
+    }
+
+    async function cargarTicketsFinalizados() {
+        try {
+            const respuesta = await fetch(`${API_TICKETS}/estado/FINALIZADO/total`);
+
+            if (!respuesta.ok) {
+                throw new Error("No se pudieron consultar los tickets finalizados");
+            }
+
+            const total = await respuesta.json();
+
+            document.getElementById("totalFinalizados").textContent = total;
+
+        } catch (error) {
+            mostrarMensaje(error.message, "danger");
+        }
+    }
+
+    async function cargarRecaudacionHoy() {
+        try {
+            const respuesta = await fetch(`${API_TICKETS}/recaudacion/hoy`);
+
+            if (!respuesta.ok) {
+                throw new Error("No se pudo consultar la recaudación del día");
+            }
+
+            const total = await respuesta.json();
+
+            document.getElementById("recaudacionHoy").textContent =
+                `Q ${Number(total).toFixed(2)}`;
+
+        } catch (error) {
+            mostrarMensaje(error.message, "danger");
+        }
+    }
+
+    async function cargarListaEspacios() {
+        try {
+            const respuesta = await fetch(API_ESPACIOS);
+
+            if (!respuesta.ok) {
+                throw new Error("No se pudieron consultar los espacios");
+            }
+
+            const espacios = await respuesta.json();
+
+            const tabla = document.getElementById("tablaEspacios");
+
+            tabla.innerHTML = espacios.map(espacio => `
+            <tr>
+                <td>${espacio.codigo}</td>
+                <td>${espacio.tipo}</td>
+                <td>
+                    <span class="badge ${espacio.ocupado ? 'bg-danger' : 'bg-success'}">
+                        ${espacio.ocupado ? 'Ocupado' : 'Disponible'}
+                    </span>
+                </td>
+            </tr>
+        `).join("");
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+    function mostrarMensaje(texto, tipo) {
+        document.getElementById("mensaje").innerHTML = `
+        <div class="alert alert-${tipo} alert-dismissible fade show" role="alert">
+            ${texto}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    `;
+
+        document.getElementById("mensaje").scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    }
+
+    async function cargarOpcionesEspacios() {
+        try {
+            const respuesta = await fetch(`${API_ESPACIOS}/disponibles`);
+
+            if (!respuesta.ok) {
+                throw new Error("No se pudieron consultar los espacios disponibles");
+            }
+
+            const espacios = await respuesta.json();
+
+            const seleccion = document.getElementById("espacioSeleccionado");
+
+            seleccion.innerHTML = '<option value="">Seleccione un espacio</option>';
+
+            espacios.forEach(espacio => {
+                seleccion.innerHTML += `
+                <option value="${espacio.id}">
+                    ${espacio.codigo} - ${espacio.tipo}
+                </option>
+            `;
+            });
+
+        } catch (error) {
+            mostrarMensaje(error.message, "danger");
+        }
+    }
+
+    async function cargarListaTickets() {
+        try {
+            const respuesta = await fetch(`${API_TICKETS}/estado/ACTIVO`);
+
+            if (!respuesta.ok) {
+                throw new Error("No se pudieron consultar los tickets activos");
+            }
+
+            const tickets = await respuesta.json();
+
+            const tabla = document.getElementById("tablaTickets");
+
+            tabla.innerHTML = tickets.map(ticket => `
+            <tr>
+                <td>${ticket.placa}</td>
+                <td>${ticket.tipoVehiculo || "No especificado"}</td>
+                <td>${ticket.espacio.codigo}</td>
+                <td>${new Date(ticket.horaEntrada).toLocaleString("es-GT")}</td>
+                <td>
+                    <span class="badge bg-success">${ticket.estado}</span>
+                </td>
+
+                <td>
+    <button class="btn btn-sm btn-danger" onclick="finalizarTicket(${ticket.id})">
+        Finalizar
+    </button>
+</td>
+
+            </tr>
+        `).join("");
+
+        } catch (error) {
+            console.error(error);
+            mostrarMensaje(error.message, "danger");
+        }
+    }
+
+    async function cargarListaTicketsFinalizados() {
+        try {
+            const respuesta = await fetch(`${API_TICKETS}/estado/FINALIZADO`);
+
+            if (!respuesta.ok) {
+                throw new Error("No se pudieron consultar los tickets finalizados");
+            }
+
+            const tickets = await respuesta.json();
+
+            const tabla = document.getElementById("tablaTicketsFinalizados");
+
+            tabla.innerHTML = tickets.map(ticket => `
+            <tr>
+                <td>${ticket.placa}</td>
+                <td>${ticket.tipoVehiculo || "No especificado"}</td>
+                <td>${ticket.espacio.codigo}</td>
+                <td>${new Date(ticket.horaEntrada).toLocaleString("es-GT")}</td>
+                <td>${ticket.horaSalida ? new Date(ticket.horaSalida).toLocaleString("es-GT") : "No registrada"}</td>
+                <td>Q ${Number(ticket.total || 0).toFixed(2)}</td>
+                <td>
+                    <span class="badge bg-secondary">${ticket.estado}</span>
+                </td>
+            </tr>
+        `).join("");
+
+        } catch (error) {
+            console.error(error);
+            mostrarMensaje(error.message, "danger");
+        }
+    }
+
+
+    async function guardarTicket(evento) {
+        evento.preventDefault();
+
+        const ticket = {
+            placa: document.getElementById("placaVehiculo").value.trim(),
+            tipoVehiculo: document.getElementById("tipoVehiculo").value,
+            espacioId: Number(document.getElementById("espacioSeleccionado").value)
+        };
+
+        try {
+            const respuesta = await fetch(API_TICKETS, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(ticket)
+            });
+
+            if (!respuesta.ok) {
+                const error = await respuesta.json();
+                throw new Error(Object.values(error).join(", ") || "No se pudo registrar el ticket");
+            }
+
+            mostrarMensaje("Vehículo registrado correctamente.", "success");
+
+            document.getElementById("formularioTicket").reset();
+
+            await cargarListaTickets();
+            await cargarListaEspacios();
+            await cargarEspaciosDisponibles();
+            await cargarOpcionesEspacios();
+            await cargarTicketsActivos();
+
+        } catch (error) {
+            mostrarMensaje(error.message, "danger");
+        }
+    }
+
+    document.getElementById("formularioTicket").addEventListener("submit", guardarTicket);
+
+    async function finalizarTicket(id) {
+        if (!confirm("¿Deseas finalizar este ticket?")) {
+            return;
+        }
+
+        try {
+            const respuesta = await fetch(`${API_TICKETS}/${id}/finalizar`, {
+                method: "PUT"
+            });
+
+            if (!respuesta.ok) {
+                throw new Error("No se pudo finalizar el ticket");
+            }
+
+            mostrarMensaje("Ticket finalizado correctamente.", "success");
+
+            await cargarIndicadores();
+
+        } catch (error) {
+            mostrarMensaje(error.message, "danger");
+        }
+    }
+
+
+    async function guardarEspacio(evento) {
+        evento.preventDefault();
+
+        const espacio = {
+            codigo: document.getElementById("codigoEspacio").value.trim(),
+            tipo: document.getElementById("tipoEspacio").value
+        };
+
+        try {
+            const respuesta = await fetch(API_ESPACIOS, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(espacio)
+            });
+
+            if (!respuesta.ok) {
+                throw new Error("No se pudo registrar el espacio. Verifica que el código no esté duplicado.");
+            }
+
+            mostrarMensaje("Espacio registrado correctamente.", "success");
+
+            document.getElementById("formularioEspacio").reset();
+
+            await cargarListaEspacios();
+            await cargarEspaciosDisponibles();
+
+        } catch (error) {
+            mostrarMensaje(error.message, "danger");
+        }
+    }
+
+    document.getElementById("formularioEspacio").addEventListener("submit", guardarEspacio);
+
+
+
+    async function cargarIndicadores() {
+        await cargarEspaciosDisponibles();
+        await cargarTicketsActivos();
+        await cargarTicketsFinalizados();
+        await cargarRecaudacionHoy();
+        await cargarListaEspacios();
+
+        await cargarOpcionesEspacios();
+
+        await cargarListaTickets();
+
+        await cargarListaTicketsFinalizados();
+
+
+    }
+
+    document.addEventListener("DOMContentLoaded", cargarIndicadores);
+
+</script>
+
+</body>
+</html>
