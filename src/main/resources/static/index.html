@@ -397,7 +397,7 @@
             <tr>
                 <td>${ticket.placa}</td>
                 <td>${ticket.tipoVehiculo || "No especificado"}</td>
-                <td>${ticket.espacio.codigo}</td>
+                <td>${ticket.codigoEspacio}</td>
                 <td>${new Date(ticket.horaEntrada).toLocaleString("es-GT")}</td>
                 <td>
                     <span class="badge bg-success">${ticket.estado}</span>
@@ -434,7 +434,7 @@
             <tr>
                 <td>${ticket.placa}</td>
                 <td>${ticket.tipoVehiculo || "No especificado"}</td>
-                <td>${ticket.espacio.codigo}</td>
+                <td>${ticket.codigoEspacio}</td>
                 <td>${new Date(ticket.horaEntrada).toLocaleString("es-GT")}</td>
                 <td>${ticket.horaSalida ? new Date(ticket.horaSalida).toLocaleString("es-GT") : "No registrada"}</td>
                 <td>Q ${Number(ticket.total || 0).toFixed(2)}</td>
