@@ -160,8 +160,6 @@ La dirección base es:
 | **PUT** | `/api/tickets/{id}/finalizar` | Finalizar un ticket. |
 | **DELETE** | `/api/tickets/{id}` | Eliminar un ticket. |
 
-Para las solicitudes **POST** y **PUT** se deben enviar los datos en formato JSON utilizando el encabezado:
-
-`Content-Type: application/json`
+Para registrar o actualizar espacios y tickets mediante solicitudes **POST** y **PUT**, se utiliza el formato **JSON** en el apartado **Body** de Postman, seleccionando las opciones **raw** y **JSON**.
 
 Se recomienda ejecutar solicitudes válidas e inválidas para comprobar el funcionamiento de las validaciones, las reglas de negocio y el manejo de errores.
