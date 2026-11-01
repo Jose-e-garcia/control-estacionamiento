@@ -24,4 +24,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     Double calcularTotalRecaudado(LocalDateTime inicio, LocalDateTime fin);
 
 
+    boolean existsByEspacio_Id(Long espacioId);
+
+
 }

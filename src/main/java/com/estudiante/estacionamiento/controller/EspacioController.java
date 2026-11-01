@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.estudiante.estacionamiento.dto.EspacioRequestDTO;
 
+import org.springframework.web.bind.annotation.PathVariable;
+
+import org.springframework.web.bind.annotation.PutMapping;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -30,6 +36,12 @@ public class EspacioController {
         return espacioService.listarEspacios();
     }
 
+    @GetMapping("/{id}")
+    public Espacio buscarEspacioPorId(@PathVariable Long id) {
+        return espacioService.buscarEspacioPorId(id);
+    }
+
+
     @GetMapping("/disponibles")
     public List<Espacio> listarEspaciosDisponibles() {
         return espacioService.listarEspaciosDisponibles();
@@ -44,4 +56,17 @@ public class EspacioController {
     public Espacio guardarEspacio(@Valid @RequestBody EspacioRequestDTO datos) {
         return espacioService.guardarEspacio(datos);
     }
+
+    @PutMapping("/{id}")
+    public Espacio actualizarEspacio(
+            @PathVariable Long id,
+            @Valid @RequestBody EspacioRequestDTO datos) {
+        return espacioService.actualizarEspacio(id, datos);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminarEspacio(@PathVariable Long id) {
+        espacioService.eliminarEspacio(id);
+    }
+
 }

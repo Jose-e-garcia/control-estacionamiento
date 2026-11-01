@@ -649,6 +649,99 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Consultar espacio por ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/espacios/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "espacios",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Modificar espacio",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"codigo\": \"A-15\",\r\n    \"tipo\": \"AUTO\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/espacios/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "espacios",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Eliminar espacio",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/espacios/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "espacios",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verificar espacio eliminado",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/espacios/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "espacios",
+            "5"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }

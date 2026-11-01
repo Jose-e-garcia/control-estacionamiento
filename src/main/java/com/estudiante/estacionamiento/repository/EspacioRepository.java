@@ -15,4 +15,6 @@ public interface EspacioRepository extends JpaRepository<Espacio, Long> {
 
     boolean existsByCodigo(String codigo);
 
+    boolean existsByCodigoAndIdNot(String codigo, Long id);
+
 }
