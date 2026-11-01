@@ -704,7 +704,7 @@
     {
       "name": "Eliminar espacio",
       "request": {
-        "method": "GET",
+        "method": "DELETE",
         "header": [],
         "url": {
           "raw": "http://localhost:8080/api/espacios/5",
